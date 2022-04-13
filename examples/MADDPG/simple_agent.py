@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import parl
-import paddle
+import torch
 import numpy as np
 from parl.utils import ReplayMemory
 
@@ -54,7 +54,7 @@ class MAAgent(parl.Agent):
     def predict(self, obs, use_target_model=False):
         """ predict action by model or target_model
         """
-        obs = paddle.to_tensor(obs.reshape(1, -1), dtype='float32')
+        obs = torch.tensor(obs.reshape(1, -1), dtype=torch.float32)
         act = self.alg.predict(obs, use_target_model=use_target_model)
         act_numpy = act.detach().cpu().numpy().flatten()
         return act_numpy
@@ -86,18 +86,18 @@ class MAAgent(parl.Agent):
         _, _, batch_rew, _, batch_isOver = self.rpm.sample_batch_by_index(
             rpm_sample_index)
         batch_obs_n = [
-            paddle.to_tensor(obs, dtype='float32') for obs in batch_obs_n
+            torch.torch(obs, dtype='float32') for obs in batch_obs_n
         ]
         batch_act_n = [
-            paddle.to_tensor(act, dtype='float32') for act in batch_act_n
+            torch.torch(act, dtype='float32') for act in batch_act_n
         ]
-        batch_rew = paddle.to_tensor(batch_rew, dtype='float32')
-        batch_isOver = paddle.to_tensor(batch_isOver, dtype='float32')
+        batch_rew = torch.torch(batch_rew, dtype='float32')
+        batch_isOver = torch.torch(batch_isOver, dtype='float32')
 
         # compute target q
         target_act_next_n = []
         batch_obs_next_n = [
-            paddle.to_tensor(obs, dtype='float32') for obs in batch_obs_next_n
+            torch.torch(obs, dtype='float32') for obs in batch_obs_next_n
         ]
         for i in range(self.n):
             target_act_next = agents[i].alg.predict(

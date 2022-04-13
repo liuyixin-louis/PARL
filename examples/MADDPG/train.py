@@ -28,7 +28,7 @@ ACTOR_LR = 0.01  # learning rate of the actor model
 GAMMA = 0.95  # reward discount factor
 TAU = 0.01  # soft update
 BATCH_SIZE = 1024
-MAX_EPISODES = 25000  # stop condition:number of episodes
+MAX_EPISODES = 10  # stop condition:number of episodes
 MAX_STEP_PER_EPISODE = 25  # maximum step per episode
 STAT_RATE = 1000  # statistical interval of save model or count reward
 

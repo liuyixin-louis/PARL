@@ -13,9 +13,9 @@
 # limitations under the License.
 
 import parl
-import paddle
-import paddle.nn as nn
-import paddle.nn.functional as F
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
 
 
 class MAModel(parl.Model):
@@ -50,25 +50,21 @@ class ActorModel(parl.Model):
         self.fc1 = nn.Linear(
             obs_dim,
             hid1_size,
-            weight_attr=paddle.ParamAttr(
-                initializer=paddle.nn.initializer.XavierUniform()))
+            )
         self.fc2 = nn.Linear(
             hid1_size,
             hid2_size,
-            weight_attr=paddle.ParamAttr(
-                initializer=paddle.nn.initializer.XavierUniform()))
+            )
         self.fc3 = nn.Linear(
             hid2_size,
             act_dim,
-            weight_attr=paddle.ParamAttr(
-                initializer=paddle.nn.initializer.XavierUniform()))
+            )
         if self.continuous_actions:
             std_hid_size = 64
             self.std_fc = nn.Linear(
                 std_hid_size,
-                act_dim,
-                weight_attr=paddle.ParamAttr(
-                    initializer=paddle.nn.initializer.XavierUniform()))
+                act_dim)
+
 
     def forward(self, obs):
         hid1 = F.relu(self.fc1(obs))
@@ -88,24 +84,18 @@ class CriticModel(parl.Model):
         out_dim = 1
         self.fc1 = nn.Linear(
             critic_in_dim,
-            hid1_size,
-            weight_attr=paddle.ParamAttr(
-                initializer=paddle.nn.initializer.XavierUniform()))
+            hid1_size)
         self.fc2 = nn.Linear(
             hid1_size,
-            hid2_size,
-            weight_attr=paddle.ParamAttr(
-                initializer=paddle.nn.initializer.XavierUniform()))
+            hid2_size)
         self.fc3 = nn.Linear(
             hid2_size,
-            out_dim,
-            weight_attr=paddle.ParamAttr(
-                initializer=paddle.nn.initializer.XavierUniform()))
+            out_dim)
 
     def forward(self, obs_n, act_n):
-        inputs = paddle.concat(obs_n + act_n, axis=1)
+        inputs = torch.concat(obs_n + act_n, axis=1)
         hid1 = F.relu(self.fc1(inputs))
         hid2 = F.relu(self.fc2(hid1))
         Q = self.fc3(hid2)
-        Q = paddle.squeeze(Q, axis=1)
+        Q = torch.squeeze(Q, axis=1)
         return Q

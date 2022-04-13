@@ -30,8 +30,8 @@ simple_push<br>
 <img src="../../benchmark/fluid/MADDPG/.benchmark/MADDPG_simple_push.gif"             width = "170" height = "170" alt="MADDPG_simple_push"/>
 </td>
 <td>
-simple_reference<br>
-<img src="../../benchmark/fluid/MADDPG/.benchmark/MADDPG_simple_reference.gif"        width = "170" height = "170" alt="MADDPG_simple_reference"/>
+simple_crypto<br>
+<img src="../../benchmark/fluid/MADDPG/.benchmark/MADDPG_simple_crypto.gif"        width = "170" height = "170" alt="MADDPG_simple_reference"/>
 </td>
 </tr>
 <tr>
@@ -53,6 +53,7 @@ simple_world_comm<br>
 </td>
 </tr>
 </table>
+
 
 ## How to use
 ### Dependencies:
